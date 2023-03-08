@@ -1,0 +1,8 @@
+allowlist:
+  - ""
+
+openai-api-key: ""
+
+text_command_aliases:
+  - chatgpt
+  - gpt
