@@ -1,3 +1,6 @@
+# See https://github.com/maubot/maubot/blob/master/maubot/matrix.py if you want to see the options
+# for responding to messages
+
 import subprocess
 import aiohttp
 import uuid
@@ -79,7 +82,11 @@ class AIBot(Plugin):
                 ) as resp:
                     response = await resp.json()
                     if response.get("choices", None) is not None:
-                        await evt.reply(response["choices"][0]["text"])
+                        # await evt.reply(response["choices"][0]["text"])
+                        await self.client.send_markdown(
+                            room_id = evt.room_id,
+                            markdown = response["choices"][0]["text"]
+                        )
                     elif response.get("error", None) is not None:
                         await evt.reply(
                             f"Sorry there's been an error: {response.get('error', {}).get('message', 'unknown error')}"
@@ -102,7 +109,15 @@ class AIBot(Plugin):
                 ) as resp:
                     response = await resp.json()
                     if response.get("choices", None) is not None:
-                        await evt.reply(response["choices"][0]["message"]["content"])
+                        # await evt.reply(response["choices"][0]["message"]["content"])
+                        await evt.respond(response["choices"][0]["message"]["content"])
+
+                        # await self.client.send_markdown(
+                        #     room_id = evt.room_id,
+                        #     markdown = response["choices"][0]["message"]["content"]
+                        # )
+
+
                     elif response.get("error", None) is not None:
                         await evt.reply(
                             f"Sorry there's been an error: {response.get('error', {}).get('message', 'unknown error')}"
