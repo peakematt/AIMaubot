@@ -31,6 +31,7 @@ class Config(BaseProxyConfig):
         helper.copy("text_ai_use_chat_endpoint")
         helper.copy("text_ai_base_url")
         helper.copy("image_ai_base_url")
+        helper.copy("verify_ssl")
 
 
 class AIBot(Plugin):
@@ -81,8 +82,9 @@ class AIBot(Plugin):
                         ],
                         "presence_penalty": self.config[
                             "text_ai_model_presence_penalty"
-                        ],
+                        ]
                     },
+                    ssl=self.config["verify_ssl"]
                 ) as resp:
                     response = await resp.json()
                     if response.get("choices", None) is not None:
@@ -110,6 +112,7 @@ class AIBot(Plugin):
                         "model": self.config["text_ai_model"],
                         "messages": [{"role": "user", "content": prompt}],
                     },
+                    ssl=self.config["verify_ssl"],
                 ) as resp:
                     response = await resp.json()
                     if response.get("choices", None) is not None:
@@ -158,6 +161,7 @@ class AIBot(Plugin):
                     "n": self.config["images_to_generate"],
                     "size": self.config["image_output_size"],
                 },
+                ssl=self.config["verify_ssl"],
             ) as resp:
                 response = await resp.json()
 

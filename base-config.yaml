@@ -25,3 +25,4 @@ text_ai_use_chat_endpoint: false
 
 text_ai_base_url: https://api.openai.com
 image_ai_base_url: https://api.openai.com
+verify_ssl: true
