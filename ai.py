@@ -29,6 +29,8 @@ class Config(BaseProxyConfig):
         helper.copy("text_ai_model_presence_penalty")
         helper.copy("text_ai_debug")
         helper.copy("text_ai_use_chat_endpoint")
+        helper.copy("text_ai_base_url")
+        helper.copy("image_ai_base_url")
 
 
 class AIBot(Plugin):
@@ -58,10 +60,12 @@ class AIBot(Plugin):
             await evt.reply("Usage: !txtai [prompt for AI]")
             return
 
+        base_url = self.config["text_ai_base_url"]
+
         async with aiohttp.ClientSession() as session:
             if not self.config["text_ai_use_chat_endpoint"]:
                 async with session.post(
-                    "https://api.openai.com/v1/completions",
+                    f"{base_url}/v1/completions",
                     headers={
                         "Content-Type": "application/json",
                         "Authorization": f"Bearer {self.config['openai-api-key']}",
@@ -97,7 +101,7 @@ class AIBot(Plugin):
                         )
             else:
                 async with session.post(
-                    "https://api.openai.com/v1/chat/completions",
+                    f"{base_url}/v1/chat/completions",
                     headers={
                         "Content-Type": "application/json",
                         "Authorization": f"Bearer {self.config['openai-api-key']}",
@@ -140,9 +144,11 @@ class AIBot(Plugin):
             await evt.reply("Usage: !picai [prompt for AI]")
             return
 
+        base_url = base_url = self.config["image_ai_base_url"]
+
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                "https://api.openai.com/v1/images/generations",
+                f"{base_url}/v1/images/generations",
                 headers={
                     "Content-Type": "application/json",
                     "Authorization": f"Bearer {self.config['openai-api-key']}",

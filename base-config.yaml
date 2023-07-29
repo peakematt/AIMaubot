@@ -22,3 +22,6 @@ text_ai_model_frequency_penalty: 0 # accepts values 0-2. Accepts floats
 text_ai_model_presence_penalty: 0 # accepts values 0-2. Accepts floats
 text_ai_debug: false
 text_ai_use_chat_endpoint: false
+
+text_ai_base_url: https://api.openai.com
+image_ai_base_url: https://api.openai.com
